@@ -83,12 +83,13 @@ def main():
         do_enumerate = False
         for item in args.write:
             path = item[0]
+            data = item[2]
             n2 = n.get_by_path(path)
             if n2 is None:
                 print("Error: invalid path (%s)" % path)
             elif isinstance(n2, xfcp.node.MemoryNode):
                 i = n2.write(int(item[1], 0), bytearray.fromhex(item[2]))
-                print("Wrote %d bytes to %s addr 0x%x" % (i, '.'.join(str(x) for x in n2.path), int(item[1], 0)))
+                print("Wrote %d bytes (%s) to config register %s at addr 0x%x" % (i, data, '.'.join(str(x) for x in n2.path), int(item[1], 0)))
             else:
                 print("Error: not a MemoryNode (%s)" % path)
 
